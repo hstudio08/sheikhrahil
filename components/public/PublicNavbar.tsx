@@ -11,7 +11,6 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/poems", label: "Poems" },
   { href: "/quotes", label: "Quotes" },
-  { href: "/about", label: "About" }, // Added assuming you have this from the layout!
   { href: "/contact", label: "Contact" },
 ];
 

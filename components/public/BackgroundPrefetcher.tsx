@@ -8,7 +8,7 @@ export function BackgroundPrefetcher() {
 
   useEffect(() => {
     // List all the core public routes of your website
-    const routes = ["/", "/poems", "/quotes", "/about", "/contact"];
+    const routes = ["/", "/poems", "/quotes", "/contact"];
 
     const prefetchRoutes = () => {
       // router.prefetch loads the route's layout and skeleton (Suspense fallback)
