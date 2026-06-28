@@ -1,49 +1,54 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-@layer base {
-  :root {
-    /* Elegant warm paper background */
-    --background: #F9F7F3;
-    /* High contrast text, not pure black */
-    --foreground: #1A1C19;
-    
-    --card: #FFFFFF;
-    --card-foreground: #1A1C19;
-    
-    --popover: #FFFFFF;
-    --popover-foreground: #1A1C19;
-    
-    /* Subdued accents for literary feel */
-    --primary: #2C362B;
-    --primary-foreground: #F9F7F3;
-    
-    --secondary: #E3DFD5;
-    --secondary-foreground: #2C362B;
-    
-    --muted: #EBE8DE;
-    --muted-foreground: #5C6259;
-    
-    --accent: #E3DFD5;
-    --accent-foreground: #1A1C19;
-    
-    --border: #D7D3C8;
-    --input: #D7D3C8;
-    --ring: #2C362B;
+@theme {
+  /* Elegant Typography Definitions */
+  --font-serif: var(--font-cormorant), ui-serif, serif;
+  --font-body: var(--font-lora), ui-serif, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, sans-serif;
 
-    --radius: 0.25rem;
+  /* Premium Warm Paper Archetype Colors */
+  --color-background: #F9F7F3;
+  --color-foreground: #1A1C19;
+  
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1A1C19;
+  
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1A1C19;
+  
+  --color-primary: #2C362B;
+  --color-primary-foreground: #F9F7F3;
+  
+  --color-secondary: #E3DFD5;
+  --color-secondary-foreground: #2C362B;
+  
+  --color-muted: #EBE8DE;
+  --color-muted-foreground: #5C6259;
+  
+  --color-accent: #E3DFD5;
+  --color-accent-foreground: #1A1C19;
+  
+  --color-border: #D7D3C8;
+  --color-input: #D7D3C8;
+  --color-ring: #2C362B;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
 @layer base {
   * {
-    @apply border-[color:var(--border)];
+    @apply border-border;
   }
   body {
-    @apply bg-[color:var(--background)] text-[color:var(--foreground)] font-body antialiased selection:bg-[#D7D3C8] selection:text-[#1A1C19];
+    @apply bg-background text-foreground font-body antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif tracking-tight text-[color:var(--primary)];
+    @apply font-serif tracking-tight text-primary;
   }
 }

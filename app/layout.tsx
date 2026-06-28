@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     default: "Sheikh Rahil | Poet, Writer & Teacher",
   },
   description: "The official digital home for the poetry, quotes, and writings of Sheikh Rahil.",
-  metadataBase: new URL("https://your-production-url.com"), // We will update this later
+  metadataBase: new URL("https://your-production-url.com"), 
 };
 
 export default function RootLayout({
@@ -41,11 +41,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${lora.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col">
-        {/* We will inject global Navigation here in Phase 6 */}
-        <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {children}
-        </main>
-        {/* We will inject global Footer here in Phase 6 */}
+        {/* We removed the global max-w-7xl wrapper here so the admin panel can be edge-to-edge. 
+            We will apply public constraints directly to public layouts in Phase 6. */}
+        {children}
       </body>
     </html>
   );
