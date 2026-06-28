@@ -1,10 +1,7 @@
 import "server-only";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
-import { getDatabase } from "firebase-admin/database";
 
-// Properly type the service account credentials to satisfy TypeScript
 const serviceAccount = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID as string,
   clientEmail: process.env.FIREBASE_CLIENT_EMAIL as string,
@@ -23,7 +20,5 @@ if (!getApps().length) {
 }
 
 const adminDb = getFirestore();
-const adminAuth = getAuth();
-const adminRtdb = getDatabase();
 
-export { adminDb, adminAuth, adminRtdb };
+export { adminDb };
