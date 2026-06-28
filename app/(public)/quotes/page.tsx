@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getAllPublishedQuotes } from "@/lib/firebase/db-quotes";
 import { QuotesArchive } from "@/components/public/QuotesArchive";
 
-export const revalidate = 3600; // ISR: Revalidate every hour
+export const revalidate = 0; // ISR: Revalidate every hour
 
 export const metadata: Metadata = {
   title: "Quotes | Sheikh Rahil",

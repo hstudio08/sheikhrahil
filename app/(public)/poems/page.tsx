@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getAllPublishedPoems } from "@/lib/firebase/db-poems";
 import { PoemsArchive } from "@/components/public/PoemsArchive";
 
-export const revalidate = 3600; // ISR: Revalidate every hour
+export const revalidate = 0; // ISR: Revalidate every hour
 
 export const metadata: Metadata = {
   title: "Poems | Sheikh Rahil",

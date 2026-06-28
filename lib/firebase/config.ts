@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
+import { getFirestore, initializeFirestore, persistentLocalCache, memoryLocalCache } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
@@ -13,11 +13,15 @@ const firebaseConfig = {
   databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 };
 
-// Ensure Firebase is initialized only once (prevents Next.js hot-reload crashes)
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 const auth = getAuth(app);
-const db = getFirestore(app);
+
+// FIX: Initialize Firestore with memory cache only to prevent persistent stale data
+const db = initializeFirestore(app, {
+  localCache: memoryLocalCache(),
+});
+
 const rtdb = getDatabase(app);
 
 export { app, auth, db, rtdb };

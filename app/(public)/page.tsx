@@ -6,7 +6,7 @@ import { ContactForm } from "@/components/public/ContactForm";
 import { ArrowRight } from "lucide-react";
 import FeaturedQuotesBlock from "@/components/public/FeaturedQuotesBlock";
 
-export const revalidate = 3600;
+export const revalidate = 0;
 
 async function getFeaturedPoems() {
   try {
@@ -84,10 +84,10 @@ export default async function HomePage() {
                 Explore Poems
               </Link>
               <Link 
-                href="/about" 
+                href="/quotes" 
                 className="px-8 py-3.5 bg-transparent text-primary border border-primary/20 rounded-full font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:border-primary"
               >
-                About
+                Quotes
               </Link>
             </div>
           </div>
