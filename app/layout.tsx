@@ -3,7 +3,6 @@ import { Cormorant_Garamond, Lora, Inter } from "next/font/google";
 import "./globals.css";
 import { BackgroundPrefetcher } from "@/components/public/BackgroundPrefetcher";
 
-// Typography: Elegant serif for headings
 const cormorant = Cormorant_Garamond({ 
   subsets: ["latin"], 
   weight: ["300", "400", "500", "600", "700"],
@@ -11,14 +10,12 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-// Typography: Highly readable serif for poetry body
 const lora = Lora({ 
   subsets: ["latin"],
   variable: "--font-lora",
   display: "swap",
 });
 
-// Typography: Clean sans for functional UI elements (dates, small buttons)
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -28,30 +25,27 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://rahilyousuf.vercel.app"), 
   
-  // SEO: Core Title & Description targeting name variations
   title: {
-    template: "%s | Sheikh Rahil",
-    default: "Sheikh Rahil (Rahil Yousuf) | Poet, Writer & Teacher",
+    template: "%s | Sheikh Rahil Yousuf",
+    default: "Sheikh Rahil Yousuf (Rahil Yousuf) | Legendary Poet, Writer & Teacher",
   },
-  description: "The official digital home for the poetry, quotes, and literary works of Sheikh Rahil (also known as Rahil Yousuf Sheikh). Explore original writings and reflections.",
+  description: "Explore the literary world of Sheikh Rahil Yousuf (also known as Rahil Yousuf and Sheikh Rahil). A legendary poet, author, and teacher sharing profound poetry, quotes, and writings.",
   
-  // SEO: Keywords targeting your specific search queries
   keywords: [
-    "Sheikh Rahil", 
+    "Sheikh Rahil Yousuf", 
     "Rahil Yousuf", 
-    "Rahil Yousuf Sheikh", 
-    "Poet", 
+    "Sheikh Rahil", 
+    "Legendary Poet", 
+    "Author",
     "Writer", 
     "Teacher", 
     "Poetry", 
     "Quotes",
     "Literature",
-    "Kashmiri Poet" // Add regional keywords if applicable
   ],
-  authors: [{ name: "Sheikh Rahil (Rahil Yousuf)" }],
-  creator: "Sheikh Rahil",
+  authors: [{ name: "Sheikh Rahil Yousuf" }],
+  creator: "Sheikh Rahil Yousuf",
 
-  // SEO: Favicon Configuration (from your zip file)
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -64,46 +58,45 @@ export const metadata: Metadata = {
   },
   manifest: '/site.webmanifest',
 
-  // SEO: Open Graph for rich previews on WhatsApp, Facebook, LinkedIn, etc.
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://rahilyousuf.vercel.app",
-    title: "Sheikh Rahil (Rahil Yousuf) | Poet & Writer",
-    description: "The official digital home for the poetry, quotes, and literary works of Sheikh Rahil.",
-    siteName: "Sheikh Rahil Portfolio",
-    // NOTE: Add an image named 'og-image.jpg' (1200x630px) to your public folder for social sharing previews
+    title: "Sheikh Rahil Yousuf | Legendary Poet, Writer & Teacher",
+    description: "The official website for the poetry, quotes, and literary works of Sheikh Rahil Yousuf.",
+    siteName: "Sheikh Rahil Yousuf Portfolio",
     images: [
       {
         url: "/og-image.jpg", 
         width: 1200,
         height: 630,
-        alt: "Sheikh Rahil - Poet & Writer",
+        alt: "Portrait of the legendary poet and writer, Sheikh Rahil Yousuf (Rahil Yousuf)",
       },
     ],
   },
 
-  // SEO: Twitter Cards for rich previews on X/Twitter
   twitter: {
     card: "summary_large_image",
-    title: "Sheikh Rahil (Rahil Yousuf) | Poet & Writer",
-    description: "The official digital home for the poetry, quotes, and literary works of Sheikh Rahil.",
-    // creator: "@yourtwitterhandle", // Uncomment and add your handle if you have one
+    title: "Sheikh Rahil Yousuf | Legendary Poet & Writer",
+    description: "The official digital home for the poetry, quotes, and literary works of Sheikh Rahil Yousuf.",
     images: ["/og-image.jpg"], 
   },
+};
 
-  // SEO: Search Engine Crawling Rules
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+// This is the MAGIC for Google SEO. It explicitly links all your names.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Sheikh Rahil Yousuf",
+  "alternateName": ["Rahil Yousuf", "Sheikh Rahil"],
+  "jobTitle": ["Poet", "Writer", "Teacher", "Author"],
+  "description": "Legendary poet, writer, and teacher known for profound literary works and poetry.",
+  "url": "https://rahilyousuf.vercel.app",
+  "image": "https://rahilyousuf.vercel.app/og-image.jpg",
+  "sameAs": [
+    // Add your social media links here if you have them (e.g., Instagram, Twitter)
+    // "https://instagram.com/yourhandle",
+  ]
 };
 
 export default function RootLayout({
@@ -115,10 +108,13 @@ export default function RootLayout({
     <html lang="en" className={`${cormorant.variable} ${lora.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col selection:bg-primary selection:text-primary-foreground">
         
-        {/* Silently pre-fetches all main routes in the background so clicks are instant */}
-        <BackgroundPrefetcher />
+        {/* Inject Schema.org JSON-LD into the head */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
 
-        {/* Global content wrapper */}
+        <BackgroundPrefetcher />
         {children}
       </body>
     </html>
