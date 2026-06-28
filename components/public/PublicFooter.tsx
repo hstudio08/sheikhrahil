@@ -19,6 +19,9 @@ export function PublicFooter({ instagramUrl, email }: PublicFooterProps) {
           <p className="font-sans text-xs text-muted-foreground">
             © {currentYear} Sheikh Rahil. All rights reserved.
           </p>
+          <p className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground">
+            Designed and developed by Qurevo Technologies
+          </p>
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
@@ -27,9 +30,6 @@ export function PublicFooter({ instagramUrl, email }: PublicFooterProps) {
           </Link>
           <Link href="/quotes" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Quotes
-          </Link>
-          <Link href="/about" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-            About
           </Link>
           <Link href="/contact" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Contact
