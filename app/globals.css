@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Elegant warm paper background */
+    --background: #F9F7F3;
+    /* High contrast text, not pure black */
+    --foreground: #1A1C19;
+    
+    --card: #FFFFFF;
+    --card-foreground: #1A1C19;
+    
+    --popover: #FFFFFF;
+    --popover-foreground: #1A1C19;
+    
+    /* Subdued accents for literary feel */
+    --primary: #2C362B;
+    --primary-foreground: #F9F7F3;
+    
+    --secondary: #E3DFD5;
+    --secondary-foreground: #2C362B;
+    
+    --muted: #EBE8DE;
+    --muted-foreground: #5C6259;
+    
+    --accent: #E3DFD5;
+    --accent-foreground: #1A1C19;
+    
+    --border: #D7D3C8;
+    --input: #D7D3C8;
+    --ring: #2C362B;
+
+    --radius: 0.25rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[color:var(--border)];
+  }
+  body {
+    @apply bg-[color:var(--background)] text-[color:var(--foreground)] font-body antialiased selection:bg-[#D7D3C8] selection:text-[#1A1C19];
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight text-[color:var(--primary)];
+  }
+}
