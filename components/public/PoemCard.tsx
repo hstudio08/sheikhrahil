@@ -11,7 +11,12 @@ interface PoemCardProps {
 }
 
 export function PoemCard({ poem }: PoemCardProps) {
-  const formattedDate = new Date(poem.publicationDate).toLocaleDateString("en-US", {
+  // Safely check if publicationDate exists; otherwise fallback to createdAt
+  const dateToFormat = poem.publicationDate
+    ? new Date(poem.publicationDate)
+    : new Date(poem.createdAt); 
+
+  const formattedDate = dateToFormat.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
