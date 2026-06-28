@@ -21,7 +21,6 @@ const navigation = [
   { name: "Poems", href: "/writeradmin/dashboard/poems", icon: Feather },
   { name: "Quotes", href: "/writeradmin/dashboard/quotes", icon: Quote },
   { name: "Messages", href: "/writeradmin/dashboard/messages", icon: MessageSquare },
-  { name: "Settings", href: "/writeradmin/dashboard/settings", icon: User },
 ];
 
 export function AdminSidebar() {

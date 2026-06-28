@@ -111,63 +111,82 @@ async function AsyncPageContent() {
 
   return (
     <>
-      {/* 1. EDITORIAL HERO SECTION */}
-      <section className="relative w-full pt-16 pb-20 md:pt-32 md:pb-32 flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-16 lg:gap-24 animate-fade-in">
-        <div className="w-full md:w-1/2 flex flex-col items-center text-center md:items-start md:text-left z-10 flex-shrink-0">
-          <div className="inline-flex items-center gap-4 mb-6 md:mb-8">
-            <span className="h-[1px] w-8 bg-primary/30 hidden md:block" />
-            <span className="font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-muted-foreground font-semibold">
-              Author & Poet
-            </span>
+     {/* 1. EDITORIAL HERO SECTION (SEO & 3D Interactive) */}
+        <section 
+          aria-label="Introduction to Sheikh Rahil"
+          className="relative w-full pt-16 pb-20 md:pt-32 md:pb-32 flex flex-col-reverse md:flex-row items-center justify-between gap-12 md:gap-16 lg:gap-24 animate-fade-in"
+        >
+          {/* Left: Text Content */}
+          <div className="w-full md:w-1/2 flex flex-col items-center text-center md:items-start md:text-left z-10 flex-shrink-0">
+            
+            {/* Elegant Subtitle */}
+            <div className="inline-flex items-center gap-4 mb-6 md:mb-8">
+              <span className="h-[1px] w-8 bg-primary/30 hidden md:block" aria-hidden="true" />
+              <span className="font-sans text-xs md:text-sm uppercase tracking-[0.3em] text-muted-foreground font-semibold">
+                Indian Author & Poet
+              </span>
+            </div>
+
+            {/* Main SEO Title */}
+            <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.05] tracking-tight font-medium mb-6 md:mb-8 text-primary drop-shadow-sm relative">
+              Sheikh Rahil
+              <span className="sr-only"> - Official Digital Archive</span>
+            </h1>
+
+            {/* Keyword-Rich Biography Snippet */}
+            <p className="font-body text-base md:text-lg lg:text-xl text-muted-foreground/90 leading-relaxed max-w-[90%] md:max-w-md mb-10 md:mb-12 font-light">
+              Hailing from the serene valley of <strong>Jammu and Kashmir</strong>, exploring life's profound questions, spiritual reflection, and the human experience. Author of the acclaimed poetry collection, <strong className="italic font-medium text-primary">Inklings and My Pen</strong>.
+            </p>
+            
+            {/* Interactive Call to Action Buttons */}
+            <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
+              <Link 
+                href="/poems" 
+                className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-sans text-xs sm:text-sm tracking-[0.15em] uppercase overflow-hidden transition-all duration-500 hover:bg-foreground hover:text-background hover:shadow-[0_8px_30px_rgb(0,0,0,0.2)] hover:-translate-y-1"
+              >
+                <span className="relative z-10">Explore Poems</span>
+                {/* Subtle shine effect */}
+                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+              </Link>
+              <Link 
+                href="/quotes" 
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-transparent text-primary border border-primary/20 rounded-full font-sans text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:-translate-y-1 hover:shadow-lg"
+              >
+                Discover Quotes
+              </Link>
+            </div>
           </div>
 
-          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.05] tracking-tight font-medium mb-6 md:mb-8 text-primary drop-shadow-sm">
-            Sheikh Rahil
-          </h1>
+          {/* Right: 3D Interactive Hero Image */}
+          {/* The parent container holds the 'perspective' to create real 3D depth */}
+          <div className="w-full md:w-1/2 flex justify-center md:justify-end relative group [perspective:1200px]">
+            
+            {/* Ambient background glow that intensifies on hover */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 blur-3xl rounded-full -z-10 pointer-events-none transition-all duration-700 group-hover:bg-primary/10 group-hover:scale-105" />
+            
+            {/* The 3D tilting card */}
+            <div className="relative w-[85%] max-w-[340px] sm:max-w-[400px] aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-[2rem] bg-muted/20 ring-1 ring-border/50 transition-all duration-700 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(-12deg)_rotateX(6deg)_scale(1.03)] shadow-2xl group-hover:shadow-[20px_20px_40px_rgba(0,0,0,0.15)]">
+              
+              {profile?.portrait?.url ? (
+                <Image 
+                  src={profile.portrait.url} 
+                  alt="Sheikh Rahil - Indian Author, Poet, and Scholar of English Literature"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center transition-all duration-700"
+                  priority
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted/40 to-muted/10">
+                  <span className="text-muted-foreground font-sans text-xs uppercase tracking-widest">Portrait</span>
+                </div>
+              )}
 
-          <p className="font-body text-base md:text-lg lg:text-xl text-muted-foreground/90 leading-relaxed max-w-[90%] md:max-w-md mb-10 md:mb-12 font-light">
-            Hailing from the serene valley of Jammu and Kashmir, exploring life's profound questions, spiritual reflection, and the human experience. Author of the magnum opus, <span className="italic font-medium text-primary">Inklings and My Pen</span>.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
-            <Link 
-              href="/poems" 
-              className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-full font-sans text-xs sm:text-sm tracking-[0.15em] uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:-translate-y-1"
-            >
-              <span className="relative z-10">Explore Poems</span>
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-            </Link>
-            <Link 
-              href="/quotes" 
-              className="w-full sm:w-auto flex items-center justify-center px-8 py-4 bg-transparent text-primary border border-primary/20 rounded-full font-sans text-xs sm:text-sm tracking-[0.15em] uppercase transition-all duration-300 hover:border-primary/60 hover:bg-primary/5"
-            >
-              Discover Quotes
-            </Link>
+              {/* Dynamic lighting overlay to enhance the 3D effect */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            </div>
           </div>
-        </div>
-
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 blur-3xl rounded-full -z-10 pointer-events-none" />
-          
-          <div className="relative w-[85%] max-w-[340px] sm:max-w-[400px] aspect-[4/5] md:aspect-[3/4] overflow-hidden rounded-[2rem] bg-muted/20 shadow-2xl shadow-primary/5 ring-1 ring-border/50 group">
-            {profile?.portrait?.url ? (
-              <Image 
-                src={profile.portrait.url} 
-                alt="Portrait of Sheikh Rahil"
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover object-center transition-all duration-1000 group-hover:scale-105 group-hover:brightness-105"
-                priority
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted/40 to-muted/10">
-                <span className="text-muted-foreground font-sans text-xs uppercase tracking-widest">Portrait</span>
-              </div>
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-          </div>
-        </div>
-      </section>
+        </section>
 
       {/* 2. THE QUOTE SLIDER */}
       {featuredQuotes.length > 0 && (
@@ -243,52 +262,65 @@ async function AsyncPageContent() {
         </div>
       </section>
 
-      {/* 4. ABOUT - TWO COLUMN EDITORIAL */}
-      <section className="w-full py-24 md:py-32">
+      {/* 4. ABOUT - TWO COLUMN EDITORIAL (SEO Optimized) */}
+      <section className="w-full py-24 md:py-32" id="about">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-          <div className="lg:col-span-5 flex flex-col gap-10">
-            <h3 className="font-serif text-4xl md:text-5xl text-primary relative">
-              The Author
-              <span className="absolute -bottom-4 left-0 w-12 h-[1px] bg-primary/40" />
-            </h3>
+          
+          {/* Left Column: Image & Decorative Elements */}
+          <div className="lg:col-span-5 flex flex-col gap-10 relative">
             
-            <div className="relative w-full aspect-[4/5] max-w-sm overflow-hidden rounded-2xl bg-muted/20 hidden md:block shadow-xl shadow-primary/5 group">
-              {aboutImage?.url ? (
-                <Image 
-                  src={aboutImage.url} 
-                  alt="Sheikh Rahil - Poet and Author"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-muted/30">
-                   <span className="text-muted-foreground font-sans text-xs uppercase tracking-widest">Author Photo</span>
-                </div>
-              )}
+            {/* Decorative background accent */}
+            <div className="absolute -inset-6 bg-primary/5 rounded-3xl -z-10 hidden md:block" />
+
+            <div className="relative w-full aspect-[4/5] max-w-sm overflow-hidden rounded-2xl bg-muted/20 hidden md:block shadow-2xl shadow-primary/10 ring-1 ring-border/50 group">
+              <Image 
+                src="https://res.cloudinary.com/mtferpxm/image/upload/v1782663744/480926814_660210776439547_302238137659663353_n_tg0fti.jpg" 
+                alt="Sheikh Rahil - Indian Author, Poet, and Scholar of English Literature"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-all duration-1000 group-hover:scale-105 group-hover:contrast-110"
+              />
+              {/* Elegant overlay gradient for depth */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             </div>
           </div>
 
-          <div className="lg:col-span-7 space-y-8 font-body text-lg text-muted-foreground leading-relaxed font-light">
-            <p className="hover:text-foreground transition-colors duration-300">
-              Born in the serene village of Hattigam, Tehsil Srigufwara, Jammu and Kashmir, Rahil Yousuf is an Indian author, poet, and scholar of English literature. His academic journey began at Sir Syed Memorial School, Mahind, where his curiosity for learning and passion for literature first took root.
-            </p>
-            <p className="hover:text-foreground transition-colors duration-300">
-              Although he initially pursued the science stream during his higher secondary education, his enduring love for language and the humanities inspired him to change course. He earned a B.A. (Honours) in English Language and Literature, followed by a Master's degree in English Literature.
-            </p>
-            <p className="hover:text-foreground transition-colors duration-300">
-              Rahil Yousuf's writings are deeply rooted in philosophical inquiry, spiritual reflection, and a profound appreciation of nature and the human experience. His literary style is distinguished by linguistic richness, contemplative depth, and a timeless search for meaning beyond the ordinary.
-            </p>
+          {/* Right Column: SEO Text Content */}
+          <div className="lg:col-span-7 flex flex-col gap-8">
             
-            <div className="relative w-full aspect-[4/5] max-w-xs mx-auto overflow-hidden rounded-xl bg-muted/20 md:hidden mt-8 shadow-lg">
-              {aboutImage?.url && (
-                <Image 
-                  src={aboutImage.url} 
-                  alt="Sheikh Rahil"
-                  fill
-                  className="object-cover"
-                />
-              )}
+            {/* SEO Heavily Focused Heading */}
+            <div className="space-y-4">
+              <span className="font-sans text-xs sm:text-sm uppercase tracking-[0.3em] text-primary/70 font-semibold block">
+                About The Author
+              </span>
+              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-primary leading-[1.05] tracking-tight font-medium relative inline-block">
+                Sheikh Rahil
+                {/* Decorative underline */}
+                <span className="absolute -bottom-4 left-0 w-24 h-[2px] bg-primary/40" />
+              </h2>
+            </div>
+
+            <div className="font-body text-lg text-muted-foreground leading-relaxed font-light mt-6 space-y-6">
+              <p className="hover:text-foreground transition-colors duration-300">
+                Born in the serene village of Hattigam, Tehsil Srigufwara, Jammu and Kashmir, <strong>Sheikh Rahil (Rahil Yousuf)</strong> is an Indian author, poet, and scholar of English literature. His academic journey began at Sir Syed Memorial School, Mahind, where his curiosity for learning and passion for literature first took root.
+              </p>
+              <p className="hover:text-foreground transition-colors duration-300">
+                Although he initially pursued the science stream during his higher secondary education, his enduring love for language and the humanities inspired him to change course. He earned a B.A. (Honours) in English Language and Literature, followed by a Master's degree in English Literature.
+              </p>
+              <p className="hover:text-foreground transition-colors duration-300">
+                <strong>Sheikh Rahil's</strong> writings are deeply rooted in philosophical inquiry, spiritual reflection, and a profound appreciation of nature and the human experience. His literary style is distinguished by linguistic richness, contemplative depth, and a timeless search for meaning beyond the ordinary.
+              </p>
+            </div>
+            
+            {/* Mobile Image Fallback (Shown only on small screens) */}
+            <div className="relative w-full aspect-[4/5] max-w-xs mx-auto overflow-hidden rounded-2xl bg-muted/20 md:hidden mt-8 shadow-xl shadow-primary/5 ring-1 ring-border/50 group">
+              <Image 
+                src="https://res.cloudinary.com/mtferpxm/image/upload/v1782663744/480926814_660210776439547_302238137659663353_n_tg0fti.jpg" 
+                alt="Sheikh Rahil - Indian Author, Poet, and Scholar of English Literature"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-1000 group-hover:scale-105"
+              />
             </div>
           </div>
         </div>
