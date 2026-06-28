@@ -220,15 +220,6 @@ export default async function HomePage() {
                   />
                 )}
               </div>
-
-              <div className="pt-8">
-                <Link 
-                  href="/about" 
-                  className="px-8 py-3.5 bg-primary text-primary-foreground rounded-full font-sans text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 inline-block"
-                >
-                  Read Full Bio
-                </Link>
-              </div>
             </div>
           </div>
         </section>
