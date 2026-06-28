@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: PoemPageProps): Promise<Metad
     openGraph: {
       title: poem.seoTitle || poem.title,
       description,
-      url: `https://sheikhrahil.com/poems/${slug}`,
+      url: `https://rahilyousuf.vercel.app/poems/${slug}`,
       type: "article",
       images: poem.coverImage?.url ? [poem.coverImage.url] : [],
     },
@@ -132,7 +132,7 @@ export default async function SinglePoemPage({ params }: PoemPageProps) {
 
             <ShareMenu
               title={poem.title}
-              url={`https://sheikhrahil.com/poems/${slug}`}
+              url={`https://rahilyousuf.vercel.app/poems/${slug}`}
             />
           </div>
 

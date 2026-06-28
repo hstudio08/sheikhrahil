@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: QuotePageProps): Promise<Meta
     openGraph: {
       title: quote.seoTitle || `Quote by ${quote.author}`,
       description,
-      url: `https://sheikhrahil.com/quotes/${slug}`,
+      url: `https://rahilyousuf.vercel.app/quotes/${slug}`,
       type: "article",
       images: quote.backgroundImage ? [quote.backgroundImage.url] : [],
     },
@@ -93,7 +93,7 @@ export default async function SingleQuotePage({ params }: QuotePageProps) {
               <div className="flex items-center gap-6">
                 {/* Render LikeButton directly, as it handles its own <button> element and text */}
                 <LikeButton targetId={quote.id} />
-                <ShareMenu title={`Quote by ${quote.author}`} url={`https://sheikhrahil.com/quotes/${slug}`} />
+                <ShareMenu title={`Quote by ${quote.author}`} url={`https://rahilyousuf.vercel.app/quotes/${slug}`} />
               </div>
             </div>
           </div>

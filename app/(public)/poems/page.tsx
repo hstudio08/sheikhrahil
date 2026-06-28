@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Poems | Sheikh Rahil",
     description: "Explore the complete archive of poetry and written prose by Sheikh Rahil.",
-    url: "https://sheikhrahil.com/poems",
+    url: "https://rahilyousuf.vercel.app/poems",
     type: "website",
   },
 };
