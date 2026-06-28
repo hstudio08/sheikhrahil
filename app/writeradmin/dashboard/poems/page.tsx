@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, Trash2, Edit, ExternalLink } from "lucide-react";
+import { Plus, Trash2, Edit } from "lucide-react";
 import { getPoems, deletePoem } from "@/lib/firebase/db-poems";
 import { Poem } from "@/types";
 
@@ -88,7 +88,7 @@ export default function PoemsDashboardPage() {
                   <td className="px-6 py-4 font-medium text-primary">
                     {poem.title}
                     {poem.isFeatured && (
-                      <span className="ml-2 inline-block px-2 py-0.5 bg-secondary text-secondary-foreground text-[10px] uppercase tracking-wider rounded-sm">
+                      <span className="ml-2 inline-block px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase tracking-wider rounded-sm">
                         Featured
                       </span>
                     )}
@@ -103,9 +103,13 @@ export default function PoemsDashboardPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-3">
-                      <button className="text-muted-foreground hover:text-primary transition-colors" title="Edit (Coming Soon)">
+                      <Link 
+                        href={`/writeradmin/dashboard/poems/${poem.id}/edit`}
+                        className="text-muted-foreground hover:text-primary transition-colors" 
+                        title="Edit Poem"
+                      >
                         <Edit className="w-4 h-4" />
-                      </button>
+                      </Link>
                       <button 
                         onClick={() => handleDelete(poem.id)}
                         className="text-muted-foreground hover:text-destructive transition-colors" 

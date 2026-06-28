@@ -94,16 +94,22 @@ export default async function SinglePoemPage({ params }: PoemPageProps) {
         />
 
         <footer className="pt-12 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-6 print:hidden">
-          <div className="flex items-center gap-6">
-            <button aria-label="Like Poem" className="flex items-center gap-2 hover:text-primary transition-colors text-muted-foreground">
-              <LikeButton targetId={poem.id}/>
-              <span className="font-sans text-[10px] uppercase tracking-widest">Like</span>
-            </button>
-            <ShareMenu title={poem.title} url={`https://sheikhrahil.com/poems/${slug}`} />
-          </div>
+  <div className="flex items-center gap-6">
+    <div className="flex items-center gap-2 text-muted-foreground">
+      <LikeButton targetId={poem.id} />
+      <span className="font-sans text-[10px] uppercase tracking-widest">
+        Like
+      </span>
+    </div>
 
-          <PrintButton />
-        </footer>
+    <ShareMenu
+      title={poem.title}
+      url={`https://sheikhrahil.com/poems/${slug}`}
+    />
+  </div>
+
+  <PrintButton />
+</footer>
 
       </div>
     </article>

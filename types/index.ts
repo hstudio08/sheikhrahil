@@ -40,6 +40,7 @@ export interface Quote {
   seoTitle?: string;
   seoDescription?: string;
   isPublished: boolean;
+  isFeatured: boolean; // <-- ADDED THIS FOR QUOTES
   createdAt: number;
   updatedAt: number;
 }
@@ -76,7 +77,7 @@ export interface MediaAsset {
 // ==========================================
 export interface Comment {
   id: string;
-  targetId: string; // The ID of the specific Poem or Quote
+  targetId: string; 
   targetType: "poem" | "quote";
   name: string;
   email: string;
@@ -86,6 +87,5 @@ export interface Comment {
 }
 
 export interface LikesCount {
-  // Keyed by targetId (e.g., poem-123: 45)
   [targetId: string]: number; 
 }

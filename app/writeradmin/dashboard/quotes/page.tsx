@@ -89,6 +89,11 @@ export default function QuotesDashboardPage() {
                     <p className="font-serif text-primary truncate max-w-md">
                       "{quote.quote}"
                     </p>
+                    {quote.isFeatured && (
+                      <span className="mt-1 inline-block px-2 py-0.5 bg-blue-100 text-blue-800 text-[10px] uppercase tracking-wider rounded-sm">
+                        Featured
+                      </span>
+                    )}
                   </td>
                   <td className="px-6 py-4 hidden md:table-cell">
                     <span className={`px-2 py-1 rounded-sm text-xs uppercase tracking-wider ${quote.isPublished ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
@@ -100,9 +105,13 @@ export default function QuotesDashboardPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-3">
-                      <button className="text-muted-foreground hover:text-primary transition-colors" title="Edit (Coming Soon)">
+                      <Link 
+                        href={`/writeradmin/dashboard/quotes/${quote.id}/edit`}
+                        className="text-muted-foreground hover:text-primary transition-colors" 
+                        title="Edit Quote"
+                      >
                         <Edit className="w-4 h-4" />
-                      </button>
+                      </Link>
                       <button 
                         onClick={() => handleDelete(quote.id)}
                         className="text-muted-foreground hover:text-destructive transition-colors" 

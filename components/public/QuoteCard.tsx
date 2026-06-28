@@ -1,67 +1,83 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Quote } from "@/types";
-import { Heart, Share2 } from "lucide-react";
+import { LikeButton } from "@/components/public/LikeButton";
+import { ShareMenu } from "@/components/public/ShareMenu";
 
-interface QuoteCardProps {
-  quote: Quote;
-}
-
-export function QuoteCard({ quote }: QuoteCardProps) {
-  // Format date natively for performance (e.g., "October 12, 2023")
+export function QuoteCard({ quote }: { quote: Quote }) {
+  // Format the date elegantly
   const formattedDate = new Date(quote.publicationDate).toLocaleDateString("en-US", {
-    year: "numeric",
     month: "long",
     day: "numeric",
+    year: "numeric",
   });
 
   return (
-    <div className="group relative flex flex-col justify-between p-8 sm:p-12 border border-border bg-background hover:border-primary/20 transition-colors min-h-[400px] overflow-hidden">
-      {/* Optional Background Image with Overlay */}
-      {quote.backgroundImage && (
-        <>
+    <div className="group relative w-full flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-4 sm:p-5 bg-white/60 backdrop-blur-md border border-black/5 rounded-xl shadow-[0_2px_10px_-3px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-black/10 transition-all duration-300 overflow-hidden">
+      
+      {/* Sleek Thumbnail if image exists */}
+      {quote.backgroundImage?.url && (
+        <Link href={`/quotes/${quote.slug}`} className="shrink-0 relative z-10 w-full sm:w-24 h-24 sm:h-20 rounded-lg overflow-hidden border border-black/5 block group-hover:opacity-90 transition-opacity">
           <Image
             src={quote.backgroundImage.url}
-            alt={quote.backgroundImage.altText || "Quote Background"}
+            alt={`Quote by ${quote.author || "Sheikh Rahil"}`}
             fill
-            className="object-cover opacity-10 group-hover:opacity-20 transition-opacity duration-500 z-0"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, 96px"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-0" />
-        </>
+        </Link>
       )}
 
-      {/* Quote Content */}
-      <div className="relative z-10 flex-grow flex items-center justify-center">
-        <blockquote className="space-y-6 text-center">
-          <p className="font-serif text-2xl sm:text-3xl lg:text-4xl leading-relaxed text-primary">
+      {/* Content Area */}
+      <div className="flex-1 min-w-0 space-y-2 relative z-10">
+        <Link href={`/quotes/${quote.slug}`} className="block">
+          <blockquote className="font-serif text-lg sm:text-xl text-primary leading-snug line-clamp-3 sm:line-clamp-2 group-hover:text-primary/70 transition-colors">
             "{quote.quote}"
-          </p>
-          <footer className="font-sans text-xs uppercase tracking-widest text-muted-foreground">
-            — {quote.author}
-          </footer>
-        </blockquote>
+          </blockquote>
+        </Link>
+        <div className="font-sans text-[10px] sm:text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+          <span>{quote.author || "Sheikh Rahil"}</span>
+          <span className="w-1 h-1 rounded-full bg-muted-foreground/40"></span>
+          <span>{formattedDate}</span>
+        </div>
       </div>
 
-      {/* Footer / Meta */}
-      <div className="relative z-10 flex items-center justify-between pt-8 mt-8 border-t border-border/50">
-        <span className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground">
-          {formattedDate}
-        </span>
-        
-        <div className="flex items-center gap-4 text-muted-foreground">
-          <button aria-label="Like Quote" className="hover:text-primary transition-colors">
-            <Heart className="w-4 h-4" />
-          </button>
-          <button aria-label="Share Quote" className="hover:text-primary transition-colors">
-            <Share2 className="w-4 h-4" />
-          </button>
-          <Link 
-            href={`/quotes/${quote.slug}`}
-            className="font-sans text-[10px] uppercase tracking-widest hover:text-primary transition-colors ml-4 border-l border-border/50 pl-4"
-          >
-            Read More
-          </Link>
-        </div>
+      {/* Action Buttons */}
+      <div className="flex items-center gap-2 shrink-0 pt-3 sm:pt-0 w-full sm:w-auto justify-end sm:justify-start border-t sm:border-t-0 border-border/50 sm:border-transparent mt-2 sm:mt-0 relative z-10">
+        {/* Adjusted Props to match standard definitions */}
+        <LikeButton targetId={quote.id} />
+        <ShareMenu 
+          url={`${typeof window !== 'undefined' ? window.location.origin : ''}/quotes/${quote.slug}`} 
+          title={`Quote by ${quote.author || "Sheikh Rahil"}`} 
+        />
+      </div>
+    </div>
+  );
+}
+
+// Google-Style Blue Skeleton Loader for the Wide Layout
+export function QuoteCardSkeleton() {
+  return (
+    <div className="w-full flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 p-4 sm:p-5 bg-white border border-blue-100/60 rounded-xl shadow-sm animate-pulse relative overflow-hidden">
+      {/* Subtle blue shimmer base */}
+      <div className="absolute inset-0 bg-blue-50/30 z-0 pointer-events-none"></div>
+
+      {/* Thumbnail Skeleton */}
+      <div className="relative z-10 w-full sm:w-24 h-24 sm:h-20 shrink-0 rounded-lg bg-blue-100/70" />
+      
+      {/* Text Skeleton */}
+      <div className="relative z-10 flex-1 w-full space-y-3 py-1">
+        <div className="h-4 sm:h-5 bg-blue-200/60 rounded w-full max-w-[90%]" />
+        <div className="h-4 sm:h-5 bg-blue-200/60 rounded w-full max-w-[65%]" />
+        <div className="h-2.5 bg-blue-200/40 rounded w-32 mt-3" />
+      </div>
+      
+      {/* Actions Skeleton */}
+      <div className="relative z-10 flex items-center gap-2 shrink-0 pt-3 sm:pt-0 w-full sm:w-auto justify-end sm:justify-start mt-2 sm:mt-0">
+        <div className="h-9 w-9 rounded-full bg-blue-100/80" />
+        <div className="h-9 w-9 rounded-full bg-blue-100/80" />
       </div>
     </div>
   );

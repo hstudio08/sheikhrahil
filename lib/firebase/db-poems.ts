@@ -1,5 +1,5 @@
 import { db } from "./config";
-import { collection, doc, setDoc, getDocs, deleteDoc, query, orderBy, where, limit } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, deleteDoc, query, orderBy, where, limit, getDoc, updateDoc } from "firebase/firestore";
 import { Poem } from "@/types";
 
 const COLLECTION_NAME = "poems";
@@ -19,11 +19,25 @@ export async function createPoem(poemData: Omit<Poem, "id" | "createdAt" | "upda
   return newPoem.id;
 }
 
+export async function updatePoem(id: string, poemData: Partial<Omit<Poem, "id" | "createdAt">>): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  await updateDoc(docRef, {
+    ...poemData,
+    updatedAt: Date.now(),
+  });
+}
+
 export async function getPoems(): Promise<Poem[]> {
   const q = query(collection(db, COLLECTION_NAME), orderBy("createdAt", "desc"));
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Poem);
+}
+
+export async function getPoemById(id: string): Promise<Poem | null> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  const snapshot = await getDoc(docRef);
+  if (!snapshot.exists()) return null;
+  return snapshot.data() as Poem;
 }
 
 export async function getAllPublishedPoems(): Promise<Poem[]> {
@@ -33,7 +47,6 @@ export async function getAllPublishedPoems(): Promise<Poem[]> {
     orderBy("publicationDate", "desc")
   );
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Poem);
 }
 
@@ -46,13 +59,9 @@ export async function getFeaturedPublishedPoems(limitCount: number = 3): Promise
     limit(limitCount)
   );
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Poem);
 }
 
-/**
- * Fetches a single published poem by its unique slug.
- */
 export async function getPoemBySlug(slug: string): Promise<Poem | null> {
   const q = query(
     collection(db, COLLECTION_NAME),
@@ -61,11 +70,7 @@ export async function getPoemBySlug(slug: string): Promise<Poem | null> {
     limit(1)
   );
   const snapshot = await getDocs(q);
-  
-  if (snapshot.empty) {
-    return null;
-  }
-  
+  if (snapshot.empty) return null;
   return snapshot.docs[0].data() as Poem;
 }
 

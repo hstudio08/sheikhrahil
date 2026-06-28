@@ -1,5 +1,5 @@
 import { db } from "./config";
-import { collection, doc, setDoc, getDocs, deleteDoc, query, orderBy, where, limit } from "firebase/firestore";
+import { collection, doc, setDoc, getDocs, deleteDoc, query, orderBy, where, limit, getDoc, updateDoc } from "firebase/firestore";
 import { Quote } from "@/types";
 
 const COLLECTION_NAME = "quotes";
@@ -19,11 +19,25 @@ export async function createQuote(quoteData: Omit<Quote, "id" | "createdAt" | "u
   return newQuote.id;
 }
 
+export async function updateQuote(id: string, quoteData: Partial<Omit<Quote, "id" | "createdAt">>): Promise<void> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  await updateDoc(docRef, {
+    ...quoteData,
+    updatedAt: Date.now(),
+  });
+}
+
 export async function getQuotes(): Promise<Quote[]> {
   const q = query(collection(db, COLLECTION_NAME), orderBy("createdAt", "desc"));
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Quote);
+}
+
+export async function getQuoteById(id: string): Promise<Quote | null> {
+  const docRef = doc(db, COLLECTION_NAME, id);
+  const snapshot = await getDoc(docRef);
+  if (!snapshot.exists()) return null;
+  return snapshot.data() as Quote;
 }
 
 export async function getAllPublishedQuotes(): Promise<Quote[]> {
@@ -33,7 +47,6 @@ export async function getAllPublishedQuotes(): Promise<Quote[]> {
     orderBy("publicationDate", "desc")
   );
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Quote);
 }
 
@@ -45,13 +58,9 @@ export async function getLatestPublishedQuotes(limitCount: number = 3): Promise<
     limit(limitCount)
   );
   const snapshot = await getDocs(q);
-  
   return snapshot.docs.map((doc) => doc.data() as Quote);
 }
 
-/**
- * Fetches a single published quote by its unique slug.
- */
 export async function getQuoteBySlug(slug: string): Promise<Quote | null> {
   const q = query(
     collection(db, COLLECTION_NAME),
@@ -60,11 +69,7 @@ export async function getQuoteBySlug(slug: string): Promise<Quote | null> {
     limit(1)
   );
   const snapshot = await getDocs(q);
-  
-  if (snapshot.empty) {
-    return null;
-  }
-  
+  if (snapshot.empty) return null;
   return snapshot.docs[0].data() as Quote;
 }
 

@@ -1,105 +1,135 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Poems", href: "/poems" },
-  { name: "Quotes", href: "/quotes" },
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
+const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/poems", label: "Poems" },
+  { href: "/quotes", label: "Quotes" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function PublicNavbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
-  // Subtle border appears on scroll
-  useEffect(() => {
+  // High-performance scroll listener using requestAnimationFrame 
+  // Ensures we don't block the main thread or cause layout thrashing
+  React.useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const closeMenu = () => setIsMobileMenuOpen(false);
+  // Close mobile menu automatically on route change
+  React.useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-background/90 backdrop-blur-md ${
-          isScrolled ? "border-b border-border py-3" : "py-5"
-        }`}
+      {/* Floating Liquid Glass Navbar
+        - fixed top-6 for floating effect
+        - backdrop-blur-md + bg-white/60 for liquid glassmorphism
+        - border-black/10 & shadow for the slight dark boundary effect
+      */}
+      <header
+        className={cn(
+          "fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-5xl z-50 transition-all duration-500 ease-out rounded-full",
+          isScrolled 
+            ? "bg-white/60 backdrop-blur-md border border-black/10 shadow-[0_8px_30px_rgba(0,0,0,0.06)] py-3" 
+            : "bg-white/30 backdrop-blur-sm border border-black/5 shadow-sm py-4 hover:bg-white/50"
+        )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="px-6 md:px-8 flex items-center justify-between">
+          
+          {/* Logo / Author Name */}
           <Link 
             href="/" 
-            className="font-serif text-2xl tracking-tight text-primary hover:opacity-80 transition-opacity"
-            onClick={closeMenu}
+            className="font-serif text-xl tracking-wide text-primary hover:opacity-70 transition-opacity"
           >
             Sheikh Rahil
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
               return (
                 <Link
-                  key={link.name}
+                  key={link.href}
                   href={link.href}
-                  className={`font-sans text-xs uppercase tracking-widest transition-colors ${
+                  className={cn(
+                    "font-sans text-xs uppercase tracking-widest transition-all duration-300",
                     isActive 
                       ? "text-primary font-medium" 
                       : "text-muted-foreground hover:text-primary"
-                  }`}
+                  )}
                 >
-                  {link.name}
+                  {link.label}
                 </Link>
               );
             })}
           </nav>
 
           {/* Mobile Menu Toggle */}
-          <button 
-            className="md:hidden text-primary p-2 -mr-2"
+          <button
+            className="md:hidden p-2 text-primary focus:outline-none hover:opacity-70 transition-opacity"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle navigation"
+            aria-label="Toggle Menu"
           >
-            {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isMobileMenuOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
           </button>
         </div>
       </header>
 
-      {/* Mobile Navigation Menu */}
-      <div 
-        className={`fixed inset-0 z-40 bg-background transform transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-center items-center ${
-          isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
-        }`}
-      >
-        <nav className="flex flex-col items-center gap-8">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={closeMenu}
-                className={`font-serif text-3xl transition-colors ${
-                  isActive ? "text-primary" : "text-muted-foreground hover:text-primary"
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed inset-x-4 top-24 z-40 bg-white/80 backdrop-blur-xl border border-black/10 shadow-2xl rounded-2xl p-6 md:hidden flex flex-col space-y-2"
+          >
+            {NAV_LINKS.map((link) => {
+              const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "font-sans text-sm uppercase tracking-widest transition-colors block py-3 border-b border-border/40 last:border-0",
+                    isActive 
+                      ? "text-primary font-medium" 
+                      : "text-muted-foreground hover:text-primary hover:bg-black/5 rounded-md px-2 -mx-2"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

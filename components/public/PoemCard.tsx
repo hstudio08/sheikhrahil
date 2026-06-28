@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Poem } from "@/types";
+
+const DEFAULT_COVER_IMAGE = "https://res.cloudinary.com/mtferpxm/image/upload/v1782642006/ChatGPT_Image_Jun_28_2026_03_45_13_PM_r0vech.png";
 
 interface PoemCardProps {
   poem: Poem;
@@ -15,20 +19,20 @@ export function PoemCard({ poem }: PoemCardProps) {
 
   return (
     <article className="group flex flex-col gap-6 cursor-pointer">
-      <Link href={`/poems/${poem.slug}`} className="block relative aspect-[4/5] overflow-hidden bg-muted border border-border">
-        {poem.coverImage ? (
+      {/* Metallic Boundary Container */}
+      <Link 
+        href={`/poems/${poem.slug}`} 
+        className="block relative aspect-[4/5] overflow-hidden p-[1px] bg-gradient-to-br from-slate-300 via-slate-200 to-slate-400 rounded-sm shadow-sm transition-all duration-500 group-hover:shadow-lg"
+      >
+        <div className="relative w-full h-full overflow-hidden bg-muted">
           <Image
-            src={poem.coverImage.url}
-            alt={poem.coverImage.altText || poem.title}
+            src={poem.coverImage?.url || DEFAULT_COVER_IMAGE}
+            alt={poem.coverImage?.altText || poem.title}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-white">
-            <span className="font-serif text-muted-foreground italic">No cover image</span>
-          </div>
-        )}
+        </div>
       </Link>
 
       <div className="space-y-3">
@@ -37,7 +41,7 @@ export function PoemCard({ poem }: PoemCardProps) {
             {formattedDate}
           </span>
           <span className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground">
-            3 Min Read {/* We can calculate this dynamically later based on word count */}
+            3 Min Read
           </span>
         </div>
         
