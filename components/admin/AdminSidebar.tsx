@@ -20,7 +20,7 @@ const navigation = [
   { name: "Dashboard", href: "/writeradmin/dashboard", icon: LayoutDashboard },
   { name: "Poems", href: "/writeradmin/dashboard/poems", icon: Feather },
   { name: "Quotes", href: "/writeradmin/dashboard/quotes", icon: Quote },
-  { name: "Comments", href: "/writeradmin/dashboard/comments", icon: MessageSquare },
+  { name: "Messages", href: "/writeradmin/dashboard/messages", icon: MessageSquare },
   { name: "Settings", href: "/writeradmin/dashboard/settings", icon: User },
 ];
 
