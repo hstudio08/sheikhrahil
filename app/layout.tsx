@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Lora, Inter } from "next/font/google";
 import "./globals.css";
+import { BackgroundPrefetcher } from "@/components/public/BackgroundPrefetcher";
 
 // Typography: Elegant serif for headings
 const cormorant = Cormorant_Garamond({ 
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     default: "Sheikh Rahil | Poet, Writer & Teacher",
   },
   description: "The official digital home for the poetry, quotes, and writings of Sheikh Rahil.",
-  metadataBase: new URL("https://your-production-url.com"), // Update this when deploying
+  metadataBase: new URL("https://rahilyousuf.vercel.app"), 
 };
 
 export default function RootLayout({
@@ -41,8 +42,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${cormorant.variable} ${lora.variable} ${inter.variable}`}>
       <body className="min-h-screen flex flex-col selection:bg-primary selection:text-primary-foreground">
-        {/* We removed the global max-w-7xl wrapper here so the admin panel can be edge-to-edge. 
-            We will apply public constraints directly to public layouts. */}
+        
+        {/* Silently pre-fetches all main routes in the background so clicks are instant */}
+        <BackgroundPrefetcher />
+
+        {/* Global content wrapper */}
         {children}
       </body>
     </html>
