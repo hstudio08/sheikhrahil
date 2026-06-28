@@ -34,8 +34,8 @@ export function PoemsArchive({ initialPoems }: PoemsArchiveProps) {
       const matchesSearch = poem.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             poem.body.toLowerCase().includes(searchQuery.toLowerCase());
       
-      const poemYear = new Date(poem.publicationDate).getFullYear().toString();
-      const matchesYear = selectedYear === "All" || poemYear === selectedYear;
+const poemYear = new Date(poem.publicationDate || poem.createdAt).getFullYear().toString();
+const matchesYear = selectedYear === "All" || poemYear === selectedYear;
 
       return matchesSearch && matchesYear;
     });
