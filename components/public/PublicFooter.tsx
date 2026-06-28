@@ -1,6 +1,11 @@
 import Link from "next/link";
 
-export function PublicFooter() {
+interface PublicFooterProps {
+  instagramUrl?: string | null;
+  email?: string | null;
+}
+
+export function PublicFooter({ instagramUrl, email }: PublicFooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -16,7 +21,7 @@ export function PublicFooter() {
           </p>
         </div>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <Link href="/poems" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Poems
           </Link>
@@ -29,6 +34,24 @@ export function PublicFooter() {
           <Link href="/contact" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Contact
           </Link>
+          {instagramUrl ? (
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+            >
+              Instagram
+            </a>
+          ) : null}
+          {email ? (
+            <a
+              href={`mailto:${email}`}
+              className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+            >
+              Email
+            </a>
+          ) : null}
         </nav>
 
       </div>
