@@ -105,13 +105,13 @@ export default function QuotesDashboardPage() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-3">
-                      <Link 
-                        href={`/writeradmin/dashboard/quotes/${quote.id}/edit`}
-                        className="text-muted-foreground hover:text-primary transition-colors" 
-                        title="Edit Quote"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Link>
+                     <Link 
+                      href={`/writeradmin/dashboard/quotes/${quote.id}`} 
+                      className="flex items-center gap-2 px-3 py-1.5 text-sm bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors rounded-sm"
+                    >
+                      <Edit className="w-4 h-4" />
+                      Edit
+                    </Link>
                       <button 
                         onClick={() => handleDelete(quote.id)}
                         className="text-muted-foreground hover:text-destructive transition-colors" 

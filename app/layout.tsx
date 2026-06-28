@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     default: "Sheikh Rahil | Poet, Writer & Teacher",
   },
   description: "The official digital home for the poetry, quotes, and writings of Sheikh Rahil.",
-  metadataBase: new URL("https://your-production-url.com"), 
+  metadataBase: new URL("https://your-production-url.com"), // Update this when deploying
 };
 
 export default function RootLayout({
@@ -40,9 +40,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cormorant.variable} ${lora.variable} ${inter.variable}`}>
-      <body className="min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col selection:bg-primary selection:text-primary-foreground">
         {/* We removed the global max-w-7xl wrapper here so the admin panel can be edge-to-edge. 
-            We will apply public constraints directly to public layouts in Phase 6. */}
+            We will apply public constraints directly to public layouts. */}
         {children}
       </body>
     </html>

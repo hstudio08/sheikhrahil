@@ -91,10 +91,8 @@ export default async function SingleQuotePage({ params }: QuotePageProps) {
               </span>
               
               <div className="flex items-center gap-6">
-                <button aria-label="Like Quote" className="flex items-center gap-2 hover:text-primary transition-colors text-muted-foreground">
-                  <LikeButton targetId={quote.id} />
-                  <span className="font-sans text-[10px] uppercase tracking-widest">Like</span>
-                </button>
+                {/* Render LikeButton directly, as it handles its own <button> element and text */}
+                <LikeButton targetId={quote.id} />
                 <ShareMenu title={`Quote by ${quote.author}`} url={`https://sheikhrahil.com/quotes/${slug}`} />
               </div>
             </div>
