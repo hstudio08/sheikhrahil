@@ -14,17 +14,19 @@ export interface CloudinaryImage {
 // FIRESTORE COLLECTIONS
 // ==========================================
 export interface Poem {
-  id: string; 
+  id: string;
   title: string;
   slug: string;
   body: string; // Tiptap HTML string
-  publicationDate: string; // ISO String (YYYY-MM-DD)
+  publicationDate?: string | null; // ISO String (YYYY-MM-DD)
   coverImage?: CloudinaryImage | null;
   thumbnailImage?: CloudinaryImage | null;
   isFeatured: boolean;
   status: "draft" | "published";
   seoTitle?: string;
   seoDescription?: string;
+  excerpt?: string;
+  readTime?: string;
   createdAt: number; // Unix Timestamp
   updatedAt: number; // Unix Timestamp
 }
