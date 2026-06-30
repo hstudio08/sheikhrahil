@@ -6,7 +6,7 @@ const COOKIE_NAME = "rahil_admin_session";
 
 /**
  * Creates an encrypted HTTP-only session cookie containing the authentication token.
- * Valid for 5 days.
+ * Valid for 90 days.
  */
 export async function createSession(idToken: string) {
   const cookieStore = await cookies();
@@ -15,7 +15,7 @@ export async function createSession(idToken: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
-    maxAge: 60 * 60 * 24 * 5, // 5 days
+    maxAge: 60 * 60 * 24 * 90, // 90 days
     path: "/",
   });
 }

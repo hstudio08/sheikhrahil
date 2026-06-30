@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth } from "@/lib/firebase/config";
 import { createSession } from "@/lib/firebase/auth-actions";
 
@@ -34,16 +34,19 @@ export default function AdminLoginPage() {
     setServerError(null);
 
     try {
-      // 1. Authenticate against Firebase Auth Client SDK
+      // 1. Set persistence to 'LOCAL' so the browser remembers the session indefinitely
+      await setPersistence(auth, browserLocalPersistence);
+
+      // 2. Authenticate against Firebase Auth Client SDK
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
       
-      // 2. Extract JWT Token
+      // 3. Extract JWT Token
       const idToken = await userCredential.user.getIdToken();
       
-      // 3. Persist HTTP-only cookie via Server Action
+      // 4. Persist HTTP-only cookie via Server Action
       await createSession(idToken);
       
-      // 4. Force route refresh to dashboard
+      // 5. Force route refresh to dashboard
       router.push("/writeradmin/dashboard");
       router.refresh();
     } catch (error: any) {

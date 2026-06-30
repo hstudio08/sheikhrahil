@@ -19,9 +19,26 @@ export function PublicFooter({ instagramUrl, email }: PublicFooterProps) {
           <p className="font-sans text-xs text-muted-foreground">
             © {currentYear} Sheikh Rahil. All rights reserved.
           </p>
-          <p className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground">
-            Designed and developed by Qurevo Technologies
-          </p>
+          
+          {/* Updated Developer Credit Section */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 pt-1">
+            <span className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground">
+              Designed and developed by
+            </span>
+            <a
+              href="https://qurevo.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
+            >
+              <img
+                src="https://res.cloudinary.com/dpqsadqxj/image/upload/q_auto/f_auto/v1780941361/logo_p83oao_oke7zd0000_sdggc1.webp"
+                alt="Qurevo Technologies Logo"
+                className="w-3.5 h-3.5 object-contain opacity-70 group-hover:opacity-100 transition-opacity"
+              />
+              <span className="font-semibold">Qurevo Technologies</span>
+            </a>
+          </div>
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
@@ -30,6 +47,10 @@ export function PublicFooter({ instagramUrl, email }: PublicFooterProps) {
           </Link>
           <Link href="/quotes" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Quotes
+          </Link>
+          {/* Fixed: Changed <link> to <Link> */}
+          <Link href="/privacy" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Privacy Policy
           </Link>
           <Link href="/contact" className="font-sans text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Contact
